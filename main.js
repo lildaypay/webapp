@@ -14,7 +14,7 @@ function subscribe() {
 
         // TODO: Send the subscription.endpoint to your server  
         // and save it to send a push message at a later date
-        return $('#ciao').html(subscription.endpoint);  
+        return sendSubscriptionToServer(subscription);  
       })  
       .catch(function(e) {  
         if (Notification.permission === 'denied') {  
@@ -36,7 +36,31 @@ function subscribe() {
   });  
 }
 
-
+ 
+  function unsubscribe() {
+	   var pushButton = document.querySelector('.js-push-button');  
+      pushButton.disabled = true;
+      navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
+        serviceWorkerRegistration.pushManager.getSubscription().then(
+            function(pushSubscription) {
+              if (!pushSubscription) {
+                isPushEnabled = false;
+                pushButton.disabled = false;
+                pushButton.textContent = 'Enable Push Messages';
+                return;
+              }
+              var subscriptionId = pushSubscription.subscriptionId;
+              pushSubscription.unsubscribe().then(function(successful) {
+                pushButton.disabled = false;
+                pushButton.textContent = 'Enable Push Messages';
+                isPushEnabled = false;
+              }).catch(function(e) {
+                console.error('Error thrown while unsbscribing from push messaging.', e);
+              });
+            });
+      });
+    }
+ 
  // Once the service worker is registered set the initial state  
 function initialiseState() {  
   // Are Notifications supported in the service worker?  
@@ -121,4 +145,12 @@ if('serviceWorker' in navigator){
 
  
  });
- 
+
+ function sendSubscriptionToServer(subscription) {
+        console.log(subscription);
+		alert(subscription.endpoint);
+		var div = document.getElementById('ciao');
+
+div.innerHTML = div.innerHTML + subscription.endpoint;
+		//$('#ciao').html(subscription.endpoint); 
+    }
