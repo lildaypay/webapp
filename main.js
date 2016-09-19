@@ -14,7 +14,7 @@ function subscribe() {
 
         // TODO: Send the subscription.endpoint to your server  
         // and save it to send a push message at a later date
-        return console.log(subscription.endpoint);  
+        return $('#ciao').html(subscription.endpoint);  
       })  
       .catch(function(e) {  
         if (Notification.permission === 'denied') {  
