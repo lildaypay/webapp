@@ -59,7 +59,7 @@ self.addEventListener('notificationclick', function(event) {
           return client.focus();  
       }  
       if (clients.openWindow) {
-        return clients.openWindow('http://socialanime.it/side_prova.php);  
+        return clients.openWindow('http://socialanime.it/side_prova.php');  
       }
     })
   );
