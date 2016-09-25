@@ -16,10 +16,9 @@ event.waitUntil(
 
 });  */
 
- self.addEventListener('push', function(event) {
-
-event.waitUntil(
- fetch('https://socialanime.it/endopoint.php').then(function(response) {
+ self.addEventListener('push', function(event) {	
+event.waitUntil(  self.registration.pushManager.getSubscription().then(function(subscription) { var endp_min =subscription.endpoint.split("/").slice(-1);console.log("got subscription id: ", endp_min[0]);
+ fetch('http://socialanime.it/endopoint.php?endpoint='+ endp_min[0]).then(function(response) {
         if (response.status !== 200) {
             console.log('Problem. Status Code: ' + response.status);  
             throw new Error();  
@@ -34,6 +33,7 @@ event.waitUntil(
             return self.registration.showNotification(title, {body: body,icon:icon});
         });
     })
+})
   
   );
 
