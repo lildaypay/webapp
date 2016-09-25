@@ -19,7 +19,7 @@ event.waitUntil(
  self.addEventListener('push', function(event) {
 
 event.waitUntil(
- fetch('http://socialanime.it/endopoint.php').then(function(response) {
+ fetch('https://socialanime.it/endopoint.php').then(function(response) {
         if (response.status !== 200) {
             console.log('Problem. Status Code: ' + response.status);  
             throw new Error();  
